@@ -460,6 +460,11 @@ public abstract class BaseUi implements UI {
         }
     }
 
+    public void editUrlWithSearch(boolean clearInput, boolean forceIME) {
+        mNavigationBar.setSearchMode(true);
+        editUrl(clearInput, forceIME);
+    }
+
     public void editUrl(boolean clearInput, boolean forceIME) {
         if (mUiController.isInCustomActionMode()) {
             mUiController.endActionMode();
@@ -486,6 +491,7 @@ public abstract class BaseUi implements UI {
     }
 
     protected void hideTitleBar() {
+        mNavigationBar.setSearchMode(false);
         if (mTitleBar.isShowing()) {
             mTitleBar.hide();
         }

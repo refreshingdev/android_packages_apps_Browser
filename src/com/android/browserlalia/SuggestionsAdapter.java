@@ -34,7 +34,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.browserlalia.R;
 import com.android.browserlalia.search.SearchEngine;
 import com.android.browserlalia.provider.BrowserProvider2;
 
@@ -75,6 +74,11 @@ public class SuggestionsAdapter extends BaseAdapter implements Filterable,
     final Object mResultsLock = new Object();
     boolean mIncognitoMode;
     BrowserSettings mSettings;
+    private boolean suggestionsActive;
+
+    public void setSuggestionsActive(boolean suggestionsActive) {
+        this.suggestionsActive = suggestionsActive;
+    }
 
     interface CompletionListener {
 
@@ -261,7 +265,7 @@ public class SuggestionsAdapter extends BaseAdapter implements Filterable,
         }
 
         void startSuggestionsAsync(final CharSequence constraint) {
-            if (!mIncognitoMode) {
+            if (suggestionsActive && !mIncognitoMode) {
                 new SlowFilterTask().execute(constraint);
             }
         }

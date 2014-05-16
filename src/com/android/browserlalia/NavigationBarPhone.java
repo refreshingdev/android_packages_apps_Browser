@@ -46,7 +46,8 @@ public class NavigationBarPhone extends NavigationBarBase implements
     private View mTabSwitcher;
     private View mComboIcon;
     private View mTitleContainer;
-    private View mMore;
+    //private View mMore;
+    private ImageView mSearchButton;
     private Drawable mTextfieldBgDrawable;
     private PopupMenu mPopupMenu;
     private boolean mOverflowMenuShowing;
@@ -76,10 +77,10 @@ public class NavigationBarPhone extends NavigationBarBase implements
         mMagnify = (ImageView) findViewById(R.id.magnify);
         mTabSwitcher = findViewById(R.id.tab_switcher);
         mTabSwitcher.setOnClickListener(this);
-        mMore = findViewById(R.id.more);
-        mMore.setOnClickListener(this);
+        mSearchButton = (ImageView) findViewById(R.id.search);
         mComboIcon = findViewById(R.id.iconcombo);
         mComboIcon.setOnClickListener(this);
+        mSearchButton.setOnClickListener(this);
         mTitleContainer = findViewById(R.id.title_bg);
         setFocusState(false);
         Resources res = getContext().getResources();
@@ -149,8 +150,10 @@ public class NavigationBarPhone extends NavigationBarBase implements
             }
         } else if (v == mTabSwitcher) {
             ((PhoneUi) mBaseUi).toggleNavScreen();
-        } else if (mMore == v) {
-            showMenu(mMore);
+        //} else if (mMore == v) {
+        //    showMenu(mMore);
+        } else if (mSearchButton == v) {
+            mBaseUi.editUrlWithSearch(true, true);
         } else if (mClearButton == v) {
             mUrlInput.setText("");
         } else if (mComboIcon == v) {
@@ -222,7 +225,8 @@ public class NavigationBarPhone extends NavigationBarBase implements
             mMagnify.setVisibility(View.GONE);
             mTabSwitcher.setVisibility(View.VISIBLE);
             mTitleContainer.setBackgroundDrawable(null);
-            mMore.setVisibility(View.VISIBLE);
+            //mMore.setVisibility(View.VISIBLE);
+            mSearchButton.setVisibility(View.VISIBLE);
             break;
         case StateListener.STATE_HIGHLIGHTED:
             mComboIcon.setVisibility(View.GONE);
@@ -233,7 +237,8 @@ public class NavigationBarPhone extends NavigationBarBase implements
             }
             mMagnify.setVisibility(View.GONE);
             mTabSwitcher.setVisibility(View.GONE);
-            mMore.setVisibility(View.GONE);
+            //mMore.setVisibility(View.GONE);
+            mSearchButton.setVisibility(View.GONE);
             mTitleContainer.setBackgroundDrawable(mTextfieldBgDrawable);
             break;
         case StateListener.STATE_EDITED:
@@ -242,7 +247,8 @@ public class NavigationBarPhone extends NavigationBarBase implements
             mClearButton.setVisibility(View.VISIBLE);
             mMagnify.setVisibility(View.VISIBLE);
             mTabSwitcher.setVisibility(View.GONE);
-            mMore.setVisibility(View.GONE);
+            //mMore.setVisibility(View.GONE);
+            mSearchButton.setVisibility(View.GONE);
             mTitleContainer.setBackgroundDrawable(mTextfieldBgDrawable);
             break;
         }

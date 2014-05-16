@@ -349,4 +349,7 @@ public class UrlInputView extends AutoCompleteTextView
     @Override
     public void afterTextChanged(Editable s) { }
 
+    public void setSuggestions(boolean suggestions) {
+        mAdapter.setSuggestionsActive(suggestions);
+    }
 }

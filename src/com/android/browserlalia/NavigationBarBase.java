@@ -46,6 +46,7 @@ public class NavigationBarBase extends LinearLayout implements
 
     private ImageView mFavicon;
     private ImageView mLockIcon;
+    private boolean searchMode;
 
     public NavigationBarBase(Context context) {
         super(context);
@@ -158,31 +159,31 @@ public class NavigationBarBase extends LinearLayout implements
     @Override
     public void onAction(String text, String extra, String source) {
         stopEditingUrl();
-        if (UrlInputView.TYPED.equals(source)) {
-            String url = UrlUtils.smartUrlFilter(text, false);
+        if (searchMode) {
+            Intent i = new Intent();
+            String action = Intent.ACTION_SEARCH;
+            i.setAction(action);
+            i.putExtra(SearchManager.QUERY, text);
+            if (extra != null) {
+                i.putExtra(SearchManager.EXTRA_DATA_KEY, extra);
+            }
+            if (source != null) {
+                Bundle appData = new Bundle();
+                appData.putString(com.android.common.Search.SOURCE, source);
+                i.putExtra(SearchManager.APP_DATA, appData);
+            }
+            mUiController.handleNewIntent(i);
+            setDisplayTitle(text);
+            searchMode = false;
+            mUrlInput.setSuggestions(false);
+        } else {
+            String url = UrlUtils.smartUrlFilter(text, true);
             Tab t = mBaseUi.getActiveTab();
-            // Only shortcut javascript URIs for now, as there is special
-            // logic in UrlHandler for other schemas
-            if (url != null && t != null && url.startsWith("javascript:")) {
+            if (url != null && t != null) {
                 mUiController.loadUrl(t, url);
                 setDisplayTitle(text);
-                return;
             }
         }
-        Intent i = new Intent();
-        String action = Intent.ACTION_SEARCH;
-        i.setAction(action);
-        i.putExtra(SearchManager.QUERY, text);
-        if (extra != null) {
-            i.putExtra(SearchManager.EXTRA_DATA_KEY, extra);
-        }
-        if (source != null) {
-            Bundle appData = new Bundle();
-            appData.putString(com.android.common.Search.SOURCE, source);
-            i.putExtra(SearchManager.APP_DATA, appData);
-        }
-        mUiController.handleNewIntent(i);
-        setDisplayTitle(text);
     }
 
     @Override
@@ -272,4 +273,8 @@ public class NavigationBarBase extends LinearLayout implements
     @Override
     public void afterTextChanged(Editable s) { }
 
+    public void setSearchMode(boolean searchMode) {
+        this.searchMode = searchMode;
+        mUrlInput.setSuggestions(searchMode);
+    }
 }

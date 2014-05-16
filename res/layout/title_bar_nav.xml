@@ -116,11 +116,11 @@
         android:src="@drawable/ic_windows_holo_dark"
         style="@style/HoloButton" />
     <ImageButton
-        android:id="@+id/more"
+        android:id="@+id/search"
+        android:src="@drawable/ic_search_holo_dark"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        style="@style/HoloButton"
         android:gravity="center_vertical"
-        android:contentDescription="@string/accessibility_button_more"
-        android:src="@drawable/ic_menu_overflow" />
+        android:contentDescription="@string/accessibility_button_search"
+        style="@style/HoloButton" />
 </com.android.browserlalia.NavigationBarPhone>
