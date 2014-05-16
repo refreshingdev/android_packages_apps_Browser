@@ -3,8 +3,6 @@ android_packages_apps_Browser
 
 Android Web Browser (cyanogenmod) + readme
 
-(Need to merge all of this yet)
-
 Mod of CM browser (clone of AOSP browser?), tested on i9100/CM11
 
 Renamed package, name and made appicon red
