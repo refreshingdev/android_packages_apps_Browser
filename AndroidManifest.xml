@@ -16,9 +16,13 @@
  */
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.android.browser">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.android.browser"
+          android:versionCode="1"
+          android:versionName="1.00 exploder">
+    >
 
-    <original-package android:name="com.android.browser" />
+    <uses-sdk android:minSdkVersion="19"/>
 
     <permission android:name="com.android.browser.permission.PRELOAD"
         android:label="@string/permission_preload_label"
