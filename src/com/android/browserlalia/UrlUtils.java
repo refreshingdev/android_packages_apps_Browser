@@ -38,7 +38,7 @@ public class UrlUtils {
             "(.*)" );
 
     // Google search
-    private final static String QUICKSEARCH_G = "http://www.google.com/m?q=%s";
+    private final static String QUICKSEARCH_D = "http://www.duckduckgo.com/?q=%s";
     private final static String QUERY_PLACE_HOLDER = "%s";
 
     // Regular expression to strip http:// and optionally
@@ -99,7 +99,7 @@ public class UrlUtils {
      *
      * @param canBeSearch If true, will return a search url if it isn't a valid
      *                    URL. If false, invalid URLs will return null
-     * @return Original or modified URL
+     * @return Original or modified URL or null
      *
      */
     public static String smartUrlFilter(String url, boolean canBeSearch) {
@@ -126,7 +126,7 @@ public class UrlUtils {
         }
         if (canBeSearch) {
             return URLUtil.composeSearchUrl(inUrl,
-                    QUICKSEARCH_G, QUERY_PLACE_HOLDER);
+                    QUICKSEARCH_D, QUERY_PLACE_HOLDER);
         }
         return null;
     }
