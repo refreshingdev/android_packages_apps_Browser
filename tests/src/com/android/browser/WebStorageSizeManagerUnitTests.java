@@ -19,6 +19,7 @@ package com.android.browser;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.webkit.WebStorage;
+import com.android.browserlalia.WebStorageSizeManager;
 
 /**
  * This is a series of unit tests for the WebStorageSizeManager class.

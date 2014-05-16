@@ -22,6 +22,9 @@ import android.provider.Browser;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.TextUtils;
 import android.webkit.WebView;
+import com.android.browserlalia.BookmarkUtils;
+import com.android.browserlalia.BrowserActivity;
+import com.android.browserlalia.Controller;
 
 public class IntentHandlerTests extends ActivityInstrumentationTestCase2<BrowserActivity> {
 

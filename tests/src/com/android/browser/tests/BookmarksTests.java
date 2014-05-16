@@ -16,7 +16,7 @@
 
 package com.android.browser.tests;
 
-import com.android.browser.Bookmarks;
+import com.android.browserlalia.Bookmarks;
 import com.android.browser.tests.utils.BP2TestCaseHelper;
 
 import android.content.ContentResolver;

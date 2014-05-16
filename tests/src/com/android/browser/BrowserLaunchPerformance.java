@@ -10,7 +10,7 @@ public class BrowserLaunchPerformance extends LaunchPerformanceBase {
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
 
-        mIntent.setClassName(getTargetContext(), "com.android.browser.BrowserActivity");
+        mIntent.setClassName(getTargetContext(), "BrowserActivity");
         start();
     }
 

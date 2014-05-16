@@ -16,7 +16,7 @@
 
 package com.android.browser.tests.utils;
 
-import com.android.browser.provider.BrowserProvider2;
+import com.android.browserlalia.provider.BrowserProvider2;
 
 import java.io.File;
 import java.io.FilenameFilter;
