@@ -56,7 +56,6 @@
                    android:icon="@mipmap/ic_launcher_browser"
                    android:backupAgent="com.android.browserlalia.BrowserBackupAgent"
                    android:hardwareAccelerated="true"
-                   android:taskAffinity="android.task.browser"
                    android:supportsRtl="true" >
 
         <provider android:name="com.android.browserlalia.provider.BrowserProvider2"
