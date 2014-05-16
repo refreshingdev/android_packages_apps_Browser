@@ -104,6 +104,7 @@ public class UrlHandler {
 
         // If this is a Google search, attempt to add an RLZ string
         // (if one isn't already present).
+        /* users don't need it
         if (rlzProviderPresent()) {
             Uri siteUri = Uri.parse(url);
             if (needsRlzString(siteUri)) {
@@ -115,6 +116,7 @@ public class UrlHandler {
                 return true;
             }
         }
+        */
 
         if (startActivityForUrl(tab, url)) {
             return true;
