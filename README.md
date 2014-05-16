@@ -1,3 +1,4 @@
+<code>
 android_packages_apps_Browser
 =============================
 
@@ -16,3 +17,4 @@ android_packages_apps_Browser
 <br>&nbsp;Unable (?) to clean HTML5 session storage without restart,
 <br>&nbsp;Reported resolution is quite unique
 <br>&nbsp;User agent contains minor version numbers (also unique)
+</code>
