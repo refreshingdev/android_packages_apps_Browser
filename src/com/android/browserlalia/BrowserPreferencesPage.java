@@ -103,14 +103,14 @@ public class BrowserPreferencesPage extends PreferenceActivity {
     }
 
     private static final Set<String> sKnownFragments = new HashSet<String>(Arrays.asList(
-            "com.android.browser.preferences.GeneralPreferencesFragment",
-            "com.android.browser.preferences.PrivacySecurityPreferencesFragment",
-            "com.android.browser.preferences.AccessibilityPreferencesFragment",
-            "com.android.browser.preferences.AdvancedPreferencesFragment",
-            "com.android.browser.preferences.WebsiteSettingsFragment",
-            "com.android.browser.preferences.BandwidthPreferencesFragment",
-            "com.android.browser.preferences.LabPreferencesFragment",
-            "com.android.browser.preferences.DebugPreferencesFragment"));
+            "com.android.browserlalia.preferences.GeneralPreferencesFragment",
+            "com.android.browserlalia.preferences.PrivacySecurityPreferencesFragment",
+            "com.android.browserlalia.preferences.AccessibilityPreferencesFragment",
+            "com.android.browserlalia.preferences.AdvancedPreferencesFragment",
+            "com.android.browserlalia.preferences.WebsiteSettingsFragment",
+            "com.android.browserlalia.preferences.BandwidthPreferencesFragment",
+            "com.android.browserlalia.preferences.LabPreferencesFragment",
+            "com.android.browserlalia.preferences.DebugPreferencesFragment"));
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
