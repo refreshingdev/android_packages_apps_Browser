@@ -36,7 +36,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.android.browserlalia.BrowserPreferencesPage;
 import com.android.browserlalia.BrowserSettings;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.UrlUtils;
 import com.android.browserlalia.homepages.HomeProvider;
 

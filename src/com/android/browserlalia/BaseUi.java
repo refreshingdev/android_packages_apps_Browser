@@ -51,7 +51,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.Tab.SecurityState;
 import com.android.internal.view.menu.MenuBuilder;
 

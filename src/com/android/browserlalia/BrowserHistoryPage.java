@@ -60,7 +60,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 /**
  * Activity for displaying the browser's history, divided into

@@ -49,7 +49,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.provider.BrowserProvider2;
 import com.android.browserlalia.view.BookmarkExpandableView;
 import com.android.browserlalia.view.BookmarkExpandableView.BookmarkContextMenuInfo;

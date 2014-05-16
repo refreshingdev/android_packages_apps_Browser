@@ -24,7 +24,7 @@ import android.webkit.WebView;
 
 import com.android.browserlalia.BrowserSettings;
 import com.android.browserlalia.PreferenceKeys;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.text.NumberFormat;
 

@@ -37,7 +37,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.android.browserlalia.BrowserActivity;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.provider.BrowserProvider2;
 
 import java.io.File;

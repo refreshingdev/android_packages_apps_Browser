@@ -53,7 +53,7 @@ import android.provider.ContactsContract.RawContacts;
 import android.provider.SyncStateContract;
 import android.text.TextUtils;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.UrlUtils;
 import com.android.browserlalia.widget.BookmarkThumbnailWidgetProvider;
 import com.android.common.content.SyncStateContentProviderHelper;

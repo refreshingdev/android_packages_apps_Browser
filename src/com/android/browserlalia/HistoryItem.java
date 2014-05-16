@@ -22,7 +22,7 @@ import android.provider.Browser;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 /**
  *  Layout representing a history item in the classic history viewer.

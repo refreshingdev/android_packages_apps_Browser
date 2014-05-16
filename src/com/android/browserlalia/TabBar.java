@@ -40,7 +40,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.util.HashMap;
 import java.util.List;

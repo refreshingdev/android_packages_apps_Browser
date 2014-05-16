@@ -26,7 +26,7 @@ import android.webkit.DateSorter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 /**
  * ExpandableListAdapter which separates data into categories based on date.

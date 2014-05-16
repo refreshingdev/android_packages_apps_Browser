@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.util.Vector;
 

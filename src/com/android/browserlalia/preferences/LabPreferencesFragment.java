@@ -19,7 +19,7 @@ package com.android.browserlalia.preferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 public class LabPreferencesFragment extends PreferenceFragment {
 

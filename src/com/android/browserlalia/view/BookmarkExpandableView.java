@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 import com.android.browserlalia.BreadCrumbView;
 import com.android.browserlalia.BrowserBookmarksAdapter;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.internal.view.menu.MenuBuilder;
 
 import org.json.JSONException;

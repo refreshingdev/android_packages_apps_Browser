@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.preferences.BandwidthPreferencesFragment;
 import com.android.browserlalia.preferences.DebugPreferencesFragment;
 

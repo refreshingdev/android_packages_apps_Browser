@@ -16,7 +16,7 @@
 
 package com.android.browserlalia;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.addbookmark.FolderSpinner;
 import com.android.browserlalia.addbookmark.FolderSpinnerAdapter;
 

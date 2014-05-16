@@ -28,7 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.browserlalia.DeviceAccountLogin.AutoLoginCallback;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 public class AutologinBar extends LinearLayout implements OnClickListener,
         AutoLoginCallback {

@@ -15,7 +15,7 @@
  */
 package com.android.browserlalia.search;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

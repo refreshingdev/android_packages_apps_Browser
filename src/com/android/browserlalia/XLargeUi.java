@@ -32,7 +32,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.util.List;
 

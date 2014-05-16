@@ -29,7 +29,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 /**
  * Displays page info

@@ -1,7 +1,7 @@
 
 package com.android.browserlalia.view;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import android.content.Context;
 import android.graphics.Canvas;

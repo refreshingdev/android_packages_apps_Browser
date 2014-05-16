@@ -34,7 +34,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.search.SearchEngine;
 import com.android.browserlalia.provider.BrowserProvider2;
 

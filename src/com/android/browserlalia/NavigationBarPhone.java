@@ -29,7 +29,7 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnDismissListener;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.UrlInputView.StateListener;
 
 public class NavigationBarPhone extends NavigationBarBase implements

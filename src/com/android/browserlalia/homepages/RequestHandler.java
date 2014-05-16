@@ -28,7 +28,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.homepages.Template.ListEntityIterator;
 
 import java.io.File;

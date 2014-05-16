@@ -16,7 +16,7 @@
 
 package com.android.browserlalia;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.TabBar.TabView;
 
 import android.animation.ObjectAnimator;

@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import com.android.browserlalia.NavTabScroller.OnLayoutListener;
 import com.android.browserlalia.NavTabScroller.OnRemoveListener;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.TabControl.OnThumbnailUpdatedListener;
 
 import java.util.HashMap;

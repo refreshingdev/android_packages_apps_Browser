@@ -27,7 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

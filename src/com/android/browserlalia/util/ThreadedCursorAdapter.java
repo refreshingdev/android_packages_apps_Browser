@@ -28,7 +28,7 @@ import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.lang.ref.WeakReference;
 

@@ -32,7 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.browserlalia.AddBookmarkPage.BookmarkAccount;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.provider.BrowserProvider2;
 
 public class BookmarkWidgetConfigure extends ListActivity

@@ -28,7 +28,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.util.ThreadedCursorAdapter;
 import com.android.browserlalia.view.BookmarkContainer;
 

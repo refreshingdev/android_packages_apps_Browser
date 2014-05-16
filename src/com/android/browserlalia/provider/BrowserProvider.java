@@ -43,7 +43,7 @@ import android.util.Log;
 import android.util.Patterns;
 
 import com.android.browserlalia.BrowserSettings;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.search.SearchEngine;
 
 import java.io.File;

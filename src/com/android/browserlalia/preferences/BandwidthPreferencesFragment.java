@@ -24,7 +24,7 @@ import android.preference.PreferenceScreen;
 
 import com.android.browserlalia.BrowserSettings;
 import com.android.browserlalia.PreferenceKeys;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 public class BandwidthPreferencesFragment extends PreferenceFragment {
 

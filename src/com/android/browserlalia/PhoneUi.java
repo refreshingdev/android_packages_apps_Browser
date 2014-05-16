@@ -38,7 +38,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.UrlInputView.StateListener;
 
 /**

@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 public class SeekBarSummaryPreference extends SeekBarPreference {
 

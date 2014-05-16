@@ -33,7 +33,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebIconDatabase;
 import android.widget.Toast;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.io.ByteArrayOutputStream;
 

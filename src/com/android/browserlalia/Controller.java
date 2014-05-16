@@ -75,7 +75,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.android.browserlalia.IntentHandler.UrlData;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.provider.BrowserProvider2.Thumbnails;
 
 import java.io.ByteArrayOutputStream;

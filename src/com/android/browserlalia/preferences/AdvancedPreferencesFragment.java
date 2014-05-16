@@ -18,7 +18,7 @@ package com.android.browserlalia.preferences;
 
 import com.android.browserlalia.BrowserActivity;
 import com.android.browserlalia.PreferenceKeys;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import android.content.Intent;
 import android.content.res.Resources;

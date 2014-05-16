@@ -28,7 +28,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.util.ArrayList;
 

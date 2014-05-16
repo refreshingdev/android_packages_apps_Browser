@@ -21,7 +21,7 @@ import android.content.res.Resources.NotFoundException;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.net.URLEncoder;
 import java.util.Arrays;

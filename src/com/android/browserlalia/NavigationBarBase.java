@@ -32,7 +32,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.UrlInputView.UrlInputListener;
 
 public class NavigationBarBase extends LinearLayout implements

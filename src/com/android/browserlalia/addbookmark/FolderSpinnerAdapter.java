@@ -16,7 +16,7 @@
 
 package com.android.browserlalia.addbookmark;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

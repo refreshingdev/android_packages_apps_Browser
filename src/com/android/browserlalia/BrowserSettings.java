@@ -41,7 +41,7 @@ import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewDatabase;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.homepages.HomeProvider;
 import com.android.browserlalia.provider.BrowserProvider;
 import com.android.browserlalia.search.SearchEngine;

@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.view.PieItem;
 import com.android.browserlalia.view.PieMenu;
 import com.android.browserlalia.view.PieMenu.PieView.OnLayoutListener;

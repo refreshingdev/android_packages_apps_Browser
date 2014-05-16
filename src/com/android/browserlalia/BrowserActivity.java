@@ -34,7 +34,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.stub.NullController;
 import com.google.common.annotations.VisibleForTesting;
 

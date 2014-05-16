@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.provider.Browser;
 import android.util.Log;
 import android.webkit.WebView;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 import java.net.URISyntaxException;
 import java.util.List;

@@ -61,7 +61,7 @@ import android.webkit.WebView;
 import android.webkit.WebView.PictureListener;
 import android.webkit.WebViewClient;
 
-import com.android.browser.R;
+import com.android.browserlalia.R;
 import com.android.browserlalia.homepages.HomeProvider;
 
 import java.io.ByteArrayOutputStream;

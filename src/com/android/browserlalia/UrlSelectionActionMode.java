@@ -19,7 +19,7 @@ package com.android.browserlalia;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.android.browser.R;
+import com.android.browserlalia.R;
 
 public class UrlSelectionActionMode implements ActionMode.Callback {
 
