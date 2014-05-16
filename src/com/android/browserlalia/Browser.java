@@ -18,6 +18,7 @@ package com.android.browserlalia;
 
 import android.app.Application;
 import android.util.Log;
+import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 public class Browser extends Application { 
@@ -41,6 +42,9 @@ public class Browser extends Application {
         CookieSyncManager.createInstance(this);
         BrowserSettings.initialize(getApplicationContext());
         Preloader.initialize(getApplicationContext());
+        BrowserSettings settings = BrowserSettings.getInstance();
+        if (BrowserSettings.getInstance().isClearCookiesOnStartup())
+            CookieManager.getInstance().removeAllCookie();
     }
 
 }

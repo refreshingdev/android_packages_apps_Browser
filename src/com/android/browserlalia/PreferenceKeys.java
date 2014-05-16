@@ -92,6 +92,7 @@ public interface PreferenceKeys {
     static final String PREF_ENABLE_GEOLOCATION = "enable_geolocation";
     static final String PREF_PRIVACY_CLEAR_CACHE = "privacy_clear_cache";
     static final String PREF_PRIVACY_CLEAR_COOKIES = "privacy_clear_cookies";
+    static final String PREF_PRIVACY_CLEAR_COOKIES_ON_STARTUP = "clear_cookies_on_startup";
     static final String PREF_PRIVACY_CLEAR_FORM_DATA = "privacy_clear_form_data";
     static final String PREF_PRIVACY_CLEAR_GEOLOCATION_ACCESS = "privacy_clear_geolocation_access";
     static final String PREF_PRIVACY_CLEAR_HISTORY = "privacy_clear_history";

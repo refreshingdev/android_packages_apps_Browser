@@ -21,7 +21,8 @@
         <item>iPhone</item>
         <item>iPad</item>
         <item>Froyo-N1</item>
-        <item>Honeycomb-Xoom</item>
+        <item>Common S2 UK</item>
+        <item>Common S2 US</item>
     </string-array>
     <string-array name="pref_content_ua_values" translatable="false">
         <item>0</item>
@@ -30,5 +31,6 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 </resources>

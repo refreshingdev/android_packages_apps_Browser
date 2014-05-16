@@ -221,6 +221,8 @@
     <string name="pref_security_show_security_warning_summary" msgid="5260098316025397525">"Show warning if there is a problem with a site\'s security"</string>
     <string name="pref_security_accept_cookies" msgid="3201367661925047989">"Accept cookies"</string>
     <string name="pref_security_accept_cookies_summary" msgid="1907951236154433751">"Allow sites to save and read cookie data"</string>
+    <string name="pref_security_clear_cookies_on_startup">Clear cookies on startup</string>
+    <string name="pref_security_clear_cookies_on_startup_summary">Yes, do it</string>
   <string-array name="pref_text_size_choices">
     <item msgid="4952686548944739548">"Tiny"</item>
     <item msgid="1950030433642671460">"Small"</item>

@@ -75,16 +75,25 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
         "Android 2.2; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 " +
         "(KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
 
-    private static final String HONEYCOMB_USERAGENT = "Mozilla/5.0 (Linux; U; " +
-        "Android 3.1; en-us; Xoom Build/HMJ25) AppleWebKit/534.13 " +
-        "(KHTML, like Gecko) Version/4.0 Safari/534.13";
+    //private static final String HONEYCOMB_USERAGENT = "Mozilla/5.0 (Linux; U; " +
+    //    "Android 3.1; en-us; Xoom Build/HMJ25) AppleWebKit/534.13 " +
+    //    "(KHTML, like Gecko) Version/4.0 Safari/534.13";
+
+    private static final String COMMON_S2_UK = "Mozilla/5.0 (Linux; U; " +
+            "Android 4.1.2; en-gb; GT-I9100 Build/JZO54K) AppleWebKit/534.30 " +
+            "(KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+    private static final String COMMON_S2_US = "Mozilla/5.0 (Linux; U; " +
+            "Android 4.1.2; en-us; GT-I9100 Build/JZO54K) AppleWebKit/534.30 " +
+            "(KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
     private static final String USER_AGENTS[] = { null,
             DESKTOP_USERAGENT,
             IPHONE_USERAGENT,
             IPAD_USERAGENT,
             FROYO_USERAGENT,
-            HONEYCOMB_USERAGENT,
+            COMMON_S2_UK,
+            COMMON_S2_US
     };
 
     // The minimum min font size
@@ -917,5 +926,9 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
         mPrefs.edit()
             .putBoolean(KEY_LAST_RUN_PAUSED, isPaused)
             .apply();
+    }
+
+    public boolean isClearCookiesOnStartup() {
+        return mPrefs.getBoolean(PreferenceKeys.PREF_PRIVACY_CLEAR_COOKIES_ON_STARTUP, false);
     }
 }
