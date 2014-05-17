@@ -14,10 +14,17 @@ all the work done on cm-11.0 branch
 <br>added option to clear cookies on startup
 <br>added ability to filter browsing history by url and page title,
 <br>&nbsp;enabled by options menu command in history activity
+FIXME: "media volume" in context menu
+
 
 <br>Is it good for privacy now?
 <br>No. Besides missing features:
 <br>&nbsp;Unable (?) to clean HTML5 session storage without restart,
 <br>&nbsp;Reported resolution is quite unique
 <br>&nbsp;User agent contains minor version numbers (also unique)
+
+<br>Compilable with framework[2].jar converted with dex2jar and set as "provided" lib,
+also needs guava and android-suppoer-v13
 </code>
+
+
