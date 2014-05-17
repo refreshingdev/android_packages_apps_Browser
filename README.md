@@ -11,6 +11,8 @@ android_packages_apps_Browser
 <br>added search icon to navbar to enable search suggestions, search suggestions disabled by default
 <br>changed configurable user agents
 <br>added option to clear cookies on startup
+<br>added ability to filter browsing history by url and page title,
+<br>&nbsp;enabled by options menu command in history activity
 
 <br>Is it good for privacy now?
 <br>No. Besides missing features:
