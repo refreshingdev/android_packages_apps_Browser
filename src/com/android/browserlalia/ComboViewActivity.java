@@ -25,11 +25,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.browserlalia.R;
-
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class ComboViewActivity extends Activity implements CombinedBookmarksCallbacks {
@@ -59,6 +59,7 @@ public class ComboViewActivity extends Activity implements CombinedBookmarksCall
         setContentView(mViewPager);
 
         final ActionBar bar = getActionBar();
+        overflowMenuAndTabsSameRow(bar);
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         if (BrowserActivity.isTablet(this)) {
             bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME
@@ -89,6 +90,19 @@ public class ComboViewActivity extends Activity implements CombinedBookmarksCall
                 mViewPager.setCurrentItem(2);
                 break;
             }
+        }
+    }
+
+    private void overflowMenuAndTabsSameRow(ActionBar bar) {
+        //make action bar buttons (menu) overflow display in same row as tabs
+        // there is enought room for that
+        try {
+            Method setHasEmbeddedTabsMethod = bar.getClass().getDeclaredMethod(
+                    "setHasEmbeddedTabs", boolean.class);
+            setHasEmbeddedTabsMethod.setAccessible(true);
+            setHasEmbeddedTabsMethod.invoke(bar, true);
+        } catch (Exception e) {
+            Log.e(getLocalClassName(), "Error disabling actionbar embedded", e);
         }
     }
 
