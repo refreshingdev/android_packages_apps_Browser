@@ -2,9 +2,10 @@
 android_packages_apps_Browser
 =============================
 
-<br>Mod of CM browser (clone of AOSP browser?), tested on i9100/CM11
+<br>Mod of CM browser (clone of AOSP browser?), to be used on i9100/CM11 (menu button, DPI, ...)
+all the work done on cm-11.0 branch
 
-<br>Renamed package>, name and made appicon red
+<br>Renamed package, name and made appicon red
 <br>removed adding RLZ param to google search URLs
 <br>&nbsp;(doesn't work anyway on CM11 without "Play Services")
 <br>removed "more" button from navbar, since there is a menu button on i9100
