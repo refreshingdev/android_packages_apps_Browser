@@ -14,16 +14,18 @@
      limitations under the License.
 -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 >
 
     <ExpandableListView
         android:id="@+id/history"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
-
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        />
     <TextView android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +34,14 @@
         android:text="@string/empty_history"
         android:visibility="gone"
     />
+    <org.droidparts.widget.ClearableEditText
+        android:id="@+id/search"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textCapSentences|textNoSuggestions"
+        android:editable="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"
+        />
 
-</FrameLayout>
+</LinearLayout>

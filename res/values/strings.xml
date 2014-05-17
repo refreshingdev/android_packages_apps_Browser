@@ -1016,5 +1016,6 @@
     <string name="accessibility_transition_navscreen">Tab management</string>
     <!-- Content description for navigating up in the bookmark folder hierarchy [CHAR LIMIT=NONE] -->
     <string name="accessibility_button_bookmarks_folder_up">Previous folder</string>
+    <string name="filter_history">Filter history</string>
 
 </resources>

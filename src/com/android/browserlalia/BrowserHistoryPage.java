@@ -16,19 +16,9 @@
 
 package com.android.browserlalia;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentBreadCrumbs;
+import android.app.*;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ClipboardManager;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.Loader;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -36,41 +26,35 @@ import android.database.DataSetObserver;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Browser;
 import android.provider.BrowserContract;
 import android.provider.BrowserContract.Combined;
-import android.view.ContextMenu;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.android.browserlalia.R;
 
 /**
  * Activity for displaying the browser's history, divided into
  * days of viewing.
+ * FIXME favicons incorrectly assigned when filtering
  */
 public class BrowserHistoryPage extends Fragment
         implements LoaderCallbacks<Cursor>, OnChildClickListener {
 
     static final int LOADER_HISTORY = 1;
     static final int LOADER_MOST_VISITED = 2;
+    public static final int MIN_FILTER_LENGTH = 3;
+    private static final long FILTER_UPDATE_DELAY_MILIS = 1000;
 
     CombinedBookmarksCallbacks mCallback;
     HistoryAdapter mAdapter;
@@ -79,14 +63,18 @@ public class BrowserHistoryPage extends Fragment
     HistoryItem mContextHeader;
     String mMostVisitsLimit;
     ListView mGroupList, mChildList;
+    EditText mFilterEdit;
     private ViewGroup mPrefsContainer;
     private FragmentBreadCrumbs mFragmentBreadCrumbs;
     private ExpandableListView mHistoryList;
 
     private View mRoot;
+    private String mCurrentFilter;
+    private long mLastFilterUpdatetime = 0;
+    private boolean mShowFilter;
 
     static interface HistoryQuery {
-        static final String[] PROJECTION = new String[] {
+        static final String[] PROJECTION = new String[]{
                 Combined._ID, // 0
                 Combined.DATE_LAST_VISITED, // 1
                 Combined.TITLE, // 2
@@ -119,8 +107,13 @@ public class BrowserHistoryPage extends Fragment
             case LOADER_HISTORY: {
                 String sort = Combined.DATE_LAST_VISITED + " DESC";
                 String where = Combined.VISITS + " > 0";
+                String[] selectionArgs = null;
+                if (mCurrentFilter != null) {
+                    selectionArgs = new String[2];
+                    where += filterSelection(selectionArgs);
+                }
                 CursorLoader loader = new CursorLoader(getActivity(), combinedBuilder.build(),
-                        HistoryQuery.PROJECTION, where, null, sort);
+                        HistoryQuery.PROJECTION, where, selectionArgs, sort);
                 return loader;
             }
 
@@ -129,8 +122,13 @@ public class BrowserHistoryPage extends Fragment
                         .appendQueryParameter(BrowserContract.PARAM_LIMIT, mMostVisitsLimit)
                         .build();
                 String where = Combined.VISITS + " > 0";
+                String[] selectionArgs = null;
+                if (mCurrentFilter != null) {
+                    selectionArgs = new String[2];
+                    where += filterSelection(selectionArgs);
+                }
                 CursorLoader loader = new CursorLoader(getActivity(), uri,
-                        HistoryQuery.PROJECTION, where, null, Combined.VISITS + " DESC");
+                        HistoryQuery.PROJECTION, where, selectionArgs, Combined.VISITS + " DESC");
                 return loader;
             }
 
@@ -138,6 +136,12 @@ public class BrowserHistoryPage extends Fragment
                 throw new IllegalArgumentException();
             }
         }
+    }
+
+    private String filterSelection(String[] sqlArgs) {
+        sqlArgs[0] = "%" + mCurrentFilter + "%";
+        sqlArgs[1] = sqlArgs[0];
+        return " AND (" + Combined.TITLE + " LIKE ? OR " + Combined.URL + " LIKE ?)";
     }
 
     void selectGroup(int position) {
@@ -155,6 +159,12 @@ public class BrowserHistoryPage extends Fragment
             } else {
                 mRoot.findViewById(R.id.history).setVisibility(View.VISIBLE);
                 mRoot.findViewById(android.R.id.empty).setVisibility(View.GONE);
+            }
+
+            if (mAdapter.isEmpty() && mCurrentFilter == null) {
+                mRoot.findViewById(R.id.search).setVisibility(View.GONE);
+            } else {
+                mRoot.findViewById(R.id.search).setVisibility(mShowFilter ? View.VISIBLE : View.GONE);
             }
         }
     }
@@ -215,18 +225,87 @@ public class BrowserHistoryPage extends Fragment
             inflateSinglePane();
         }
 
-        // Start the loaders
+        restartLoaders();
+        return mRoot;
+    }
+
+    private void restartLoaders() {
         getLoaderManager().restartLoader(LOADER_HISTORY, null, this);
         getLoaderManager().restartLoader(LOADER_MOST_VISITED, null, this);
-
-        return mRoot;
     }
 
     private void inflateSinglePane() {
         mHistoryList = (ExpandableListView) mRoot.findViewById(R.id.history);
         mHistoryList.setAdapter(mAdapter);
         mHistoryList.setOnChildClickListener(this);
+        mFilterEdit = (EditText) mRoot.findViewById(R.id.search);
+        mFilterEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                onFilterTextChanged(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
         registerForContextMenu(mHistoryList);
+    }
+
+    private void onFilterTextChanged(String newFilterString) {
+        handleFilerChange(newFilterString, true);
+    }
+
+    private void handleFilerChange(String newFilterString, boolean scheduleDelayedUpdate) {
+        if (!delayHandlingIfNeeded(scheduleDelayedUpdate)) {
+            boolean isValidFilter = newFilterString == null || newFilterString.length() >= MIN_FILTER_LENGTH;
+            if (isValidFilter) {
+                mCurrentFilter = newFilterString;
+                restartLoaders();
+            } else if (mCurrentFilter != null) {
+                mCurrentFilter = null;
+                restartLoaders();
+            }
+        } else {
+            mCurrentFilter = newFilterString;
+        }
+    }
+
+    // TODO this really should be tested
+    // TODO maybe a cleaner and not very complex solution is possible
+    private boolean delayHandlingIfNeeded(boolean scheduleDelayedUpdate) {
+        long now = SystemClock.elapsedRealtime();
+        if (now - mLastFilterUpdatetime >= FILTER_UPDATE_DELAY_MILIS) {
+            mLastFilterUpdatetime = now;
+            return false; // not delayed
+        } else {
+            if (scheduleDelayedUpdate) {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        if (Looper.myLooper() == null) {
+                            Looper.prepare();
+                        }
+                        try {
+                            Thread.sleep(FILTER_UPDATE_DELAY_MILIS
+                                    + FILTER_UPDATE_DELAY_MILIS / 4);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        // activity may have gone in meantime
+                        if (getActivity() != null) {
+                            handleFilerChange(mCurrentFilter, false);
+                        }
+                        return null;
+                    }
+                }.execute();
+            }
+            return true;
+        }
     }
 
     private void inflateTwoPane(ViewStub stub) {
@@ -271,7 +350,7 @@ public class BrowserHistoryPage extends Fragment
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View view,
-            int groupPosition, int childPosition, long id) {
+                                int groupPosition, int childPosition, long id) {
         mCallback.openUrl(((HistoryItem) view).getUrl());
         return true;
     }
@@ -297,12 +376,12 @@ public class BrowserHistoryPage extends Fragment
                 .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                     @Override
-                     public void onClick(DialogInterface dialog, int which) {
-                         if (which == DialogInterface.BUTTON_POSITIVE) {
-                             clear.start();
-                         }
-                     }
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            clear.start();
+                        }
+                    }
                 });
         final Dialog dialog = builder.create();
         dialog.show();
@@ -310,9 +389,19 @@ public class BrowserHistoryPage extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO keep state after action restart on rotate
         if (item.getItemId() == R.id.clear_history_menu_id) {
             promptToClearHistory();
             return true;
+        } else if (item.getItemId() == R.id.filter_history_menu_id) {
+            boolean checked = ! item.isChecked();
+            item.setChecked(checked);
+
+            mShowFilter = checked;
+            if (!mShowFilter) {
+                mFilterEdit.setText("");
+            }
+            checkIfEmpty();
         }
         return super.onOptionsItemSelected(item);
     }
