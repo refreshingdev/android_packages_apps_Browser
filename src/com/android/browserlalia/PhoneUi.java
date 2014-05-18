@@ -215,8 +215,8 @@ public class PhoneUi extends BaseUi {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (showingNavScreen()
-                && (item.getItemId() != R.id.history_menu_id)
-                && (item.getItemId() != R.id.snapshots_menu_id)) {
+                && (item.getItemId() != R.id.history_menu_id)) {
+                //&& (item.getItemId() != R.id.snapshots_menu_id)) {
             hideNavScreen(mUiController.getTabControl().getCurrentPosition(), false);
         }
         return false;

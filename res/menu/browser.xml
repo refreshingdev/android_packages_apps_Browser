@@ -83,9 +83,12 @@
                 android:id="@+id/history_menu_id"
                 android:title="@string/tab_history"
                 android:alphabeticShortcut="h" />
+            <!--
             <item
                 android:id="@+id/snapshots_menu_id"
-                android:title="@string/tab_snapshots" />
+                android:title="@string/tab_snapshots"
+                android:visible="false"/>
+            -->
         </group>
         <item
             android:id="@+id/page_info_menu_id"

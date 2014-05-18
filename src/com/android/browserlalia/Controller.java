@@ -1608,9 +1608,12 @@ public class Controller
                 bookmarksOrHistoryPicker(UI.ComboViews.History);
                 break;
 
+            /*
             case R.id.snapshots_menu_id:
                 bookmarksOrHistoryPicker(UI.ComboViews.Snapshots);
                 break;
+                TODO uncomment when saving implemented (rollback this commit)
+            */
 
             case R.id.add_bookmark_menu_id:
                 bookmarkCurrentPage();
