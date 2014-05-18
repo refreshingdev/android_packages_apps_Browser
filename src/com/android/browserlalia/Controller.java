@@ -35,12 +35,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.os.PowerManager;
+import android.os.*;
 import android.os.PowerManager.WakeLock;
 import android.provider.Browser;
 import android.provider.BrowserContract;
@@ -75,7 +70,6 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.android.browserlalia.IntentHandler.UrlData;
-import com.android.browserlalia.R;
 import com.android.browserlalia.provider.BrowserProvider2.Thumbnails;
 
 import java.io.ByteArrayOutputStream;
@@ -212,6 +206,9 @@ public class Controller
     private boolean mBlockEvents;
 
     private String mVoiceResult;
+    private boolean mShouldDisplayTabsMenu;
+    private boolean mMenuContainsTabs;
+    private boolean mMenuAlreadyPrepared;
 
     public Controller(Activity browser) {
         mActivity = browser;
@@ -1162,7 +1159,7 @@ public class Controller
                 if (Intent.ACTION_VIEW.equals(intent.getAction())) {
                     Tab t = getCurrentTab();
                     Uri uri = intent.getData();
-                    loadUrl(t, uri.toString());
+                    loadUrl(t, ((Object)uri).toString());
                 } else if (intent.hasExtra(ComboViewActivity.EXTRA_OPEN_ALL)) {
                     String[] urls = intent.getStringArrayExtra(
                             ComboViewActivity.EXTRA_OPEN_ALL);
@@ -1197,8 +1194,6 @@ public class Controller
 
     /**
      * Open the Go page.
-     * @param startWithHistory If true, open starting on the history tab.
-     *                         Otherwise, start with the bookmarks tab.
      */
     @Override
     public void bookmarksOrHistoryPicker(UI.ComboViews startView) {
@@ -1479,32 +1474,55 @@ public class Controller
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        updateInLoadMenuItems(menu, getCurrentTab());
-        // hold on to the menu reference here; it is used by the page callbacks
-        // to update the menu based on loading state
-        mCachedMenu = menu;
-        // Note: setVisible will decide whether an item is visible; while
-        // setEnabled() will decide whether an item is enabled, which also means
-        // whether the matching shortcut key will function.
-        switch (mMenuState) {
-            case EMPTY_MENU:
-                if (mCurrentMenuState != mMenuState) {
-                    menu.setGroupVisible(R.id.MAIN_MENU, false);
-                    menu.setGroupEnabled(R.id.MAIN_MENU, false);
-                    menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, false);
-                }
-                break;
-            default:
-                if (mCurrentMenuState != mMenuState) {
-                    menu.setGroupVisible(R.id.MAIN_MENU, true);
-                    menu.setGroupEnabled(R.id.MAIN_MENU, true);
-                    menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, true);
-                }
-                updateMenuState(getCurrentTab(), menu);
-                break;
+        if (mMenuAlreadyPrepared) {
+            mMenuAlreadyPrepared = false;
+            if (menu == mCachedMenu) return true;
         }
-        mCurrentMenuState = mMenuState;
-        return mUi.onPrepareOptionsMenu(menu);
+
+        if (mShouldDisplayTabsMenu) {
+            menu.clear();
+
+            List<Tab> tabs = mTabControl.getTabs();
+            for (int i = 0; i < tabs.size(); i++) {
+                Tab tab = tabs.get(i);
+                menu.add(0, i, i, tab.getTitle());
+            }
+            mMenuContainsTabs = true;
+            return true;
+        } else {
+            if (mMenuContainsTabs) {
+                menu.clear();
+                onCreateOptionsMenu(menu);
+                mMenuContainsTabs = false;
+            }
+
+            updateInLoadMenuItems(menu, getCurrentTab());
+            // hold on to the menu reference here; it is used by the page callbacks
+            // to update the menu based on loading state
+            mCachedMenu = menu;
+            // Note: setVisible will decide whether an item is visible; while
+            // setEnabled() will decide whether an item is enabled, which also means
+            // whether the matching shortcut key will function.
+            switch (mMenuState) {
+                case EMPTY_MENU:
+                    if (mCurrentMenuState != mMenuState) {
+                        menu.setGroupVisible(R.id.MAIN_MENU, false);
+                        menu.setGroupEnabled(R.id.MAIN_MENU, false);
+                        menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, false);
+                    }
+                    break;
+                default:
+                    if (mCurrentMenuState != mMenuState) {
+                        menu.setGroupVisible(R.id.MAIN_MENU, true);
+                        menu.setGroupEnabled(R.id.MAIN_MENU, true);
+                        menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, true);
+                    }
+                    updateMenuState(getCurrentTab(), menu);
+                    break;
+            }
+            mCurrentMenuState = mMenuState;
+            return mUi.onPrepareOptionsMenu(menu);
+        }
     }
 
     @Override
@@ -1568,6 +1586,14 @@ public class Controller
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (mShouldDisplayTabsMenu) {
+            Tab tabToActivate = mTabControl.getTab(item.getItemId());
+            Log.d(getClass().getSimpleName(),
+                    "activating tab " + tabToActivate.getTitle() + " id " + item.getItemId());
+            setActiveTab(tabToActivate);
+            return true;
+        }
+
         if (null == getCurrentTopWebView()) {
             return false;
         }
@@ -1813,11 +1839,23 @@ public class Controller
      * programmatically open the options menu
      */
     public void openOptionsMenu() {
-        mActivity.openOptionsMenu();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // need to prepare menu before it is shown
+                if (mCachedMenu != null) onPrepareOptionsMenu(mCachedMenu);
+                mMenuAlreadyPrepared = true;
+                // onPrepareOptionsMenu will we called again, but it may be needed,
+                // mCachedMenu might be replaced with new object
+                mActivity.openOptionsMenu();
+            }
+        });
     }
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
+        Log.d(getClass().getSimpleName(),
+                "onMenuOpened, mShouldDisplayTabsMenu = " + mShouldDisplayTabsMenu);
         if (mOptionsMenuOpen) {
             if (mConfigChanged) {
                 // We do not need to make any changes to the state of the
@@ -1848,6 +1886,7 @@ public class Controller
     @Override
     public void onOptionsMenuClosed(Menu menu) {
         mOptionsMenuOpen = false;
+        mShouldDisplayTabsMenu = false;
         mUi.onOptionsMenuClosed(isInLoad());
     }
 
@@ -1931,7 +1970,6 @@ public class Controller
 
     /**
      * add the current page as a bookmark to the given folder id
-     * @param folderId use -1 for the default folder
      * @param editExisting If true, check to see whether the site is already
      *          bookmarked, and if it is, edit that bookmark.  If false, and
      *          the site is already bookmarked, do not attempt to edit the
@@ -2477,7 +2515,6 @@ public class Controller
      * Load the URL into the given WebView and update the title bar
      * to reflect the new load.  Call this instead of WebView.loadUrl
      * directly.
-     * @param view The WebView used to load url.
      * @param url The URL to load.
      */
     @Override
@@ -2642,6 +2679,14 @@ public class Controller
                 if (!noModifiers) break;
                 event.startTracking();
                 return true;
+            case KeyEvent.KEYCODE_MENU:
+                if (!noModifiers) break;
+                if (event.getRepeatCount() == 1) {
+                    mShouldDisplayTabsMenu = true;
+                    openOptionsMenu();
+                }
+                // consumed, we are showing menu programatically
+                return true;
             case KeyEvent.KEYCODE_FORWARD:
                 if (!noModifiers) break;
                 tab.goForward();
@@ -2715,6 +2760,9 @@ public class Controller
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (isMenuOrCtrlKey(keyCode)) {
             mMenuIsDown = false;
+            if (!mShouldDisplayTabsMenu) {
+                openOptionsMenu();
+            }
             if (KeyEvent.KEYCODE_MENU == keyCode
                     && event.isTracking() && !event.isCanceled()) {
                 return onMenuKey();
