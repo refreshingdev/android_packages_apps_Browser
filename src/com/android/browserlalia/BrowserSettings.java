@@ -29,6 +29,7 @@ import android.preference.PreferenceManager;
 import android.provider.Browser;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebIconDatabase;
@@ -468,6 +469,16 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
 
     public void clearDatabases() {
         WebStorage.getInstance().deleteAllData();
+        for (Tab tab : mController.getTabs()) {
+            if (tab.getWebView() != null)
+                tab.getWebView().loadUrl("javascript:sessionStorage.clear()");
+            else
+                Log.d(getClass().getSimpleName(), "tab " + tab.getTitle() + "has no webView");
+            if (tab.getSubWebView() != null)
+                tab.getSubWebView().loadUrl("javascript:sessionStorage.clear()");
+            // local storage already cleared
+            //tab.getWebView().loadUrl("javascript:localStorage.clear()");
+        }
     }
 
     public void clearLocationAccess() {
