@@ -8,6 +8,7 @@
     + ability to filter browsing history by url and page title,
      enabled by options menu command in history activity
     + menu with opened tabs on long menu button click
+     (unassign global menu button long press action in CM Setting/Buttons) 
     
     Privacy/convenience details:
     added option to clear cookies on startup
