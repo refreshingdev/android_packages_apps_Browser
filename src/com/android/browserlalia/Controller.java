@@ -208,7 +208,6 @@ public class Controller
     private String mVoiceResult;
     private boolean mShouldDisplayTabsMenu;
     private boolean mMenuContainsTabs;
-    private boolean mMenuAlreadyPrepared;
 
     public Controller(Activity browser) {
         mActivity = browser;
@@ -1474,18 +1473,16 @@ public class Controller
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mMenuAlreadyPrepared) {
-            mMenuAlreadyPrepared = false;
-            if (menu == mCachedMenu) return true;
-        }
-
         if (mShouldDisplayTabsMenu) {
             menu.clear();
 
             List<Tab> tabs = mTabControl.getTabs();
+            int currentPosition = mTabControl.getCurrentPosition();
             for (int i = 0; i < tabs.size(); i++) {
                 Tab tab = tabs.get(i);
-                menu.add(0, i, i, tab.getTitle());
+                String title = tab.getTitle();
+                if (i == currentPosition) title = "* " + title; // set checked doesn't work
+                menu.add(0, i, i, title);
             }
             mMenuContainsTabs = true;
             return true;
@@ -1842,11 +1839,7 @@ public class Controller
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                // need to prepare menu before it is shown
-                if (mCachedMenu != null) onPrepareOptionsMenu(mCachedMenu);
-                mMenuAlreadyPrepared = true;
-                // onPrepareOptionsMenu will we called again, but it may be needed,
-                // mCachedMenu might be replaced with new object
+                // TODO any solution to prevent menu flicker?
                 mActivity.openOptionsMenu();
             }
         });
