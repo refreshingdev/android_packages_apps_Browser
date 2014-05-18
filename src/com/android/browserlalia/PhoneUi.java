@@ -35,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
@@ -182,7 +183,7 @@ public class PhoneUi extends BaseUi {
         }
         MenuItem info = menu.findItem(R.id.page_info_menu_id);
         if (info != null) {
-            info.setVisible(false);
+            info.setVisible(tab != null && URLUtil.isHttpsUrl(tab.getUrl()));
         }
         MenuItem newtab = menu.findItem(R.id.new_tab_menu_id);
         if (newtab != null && !mUseQuickControls) {
