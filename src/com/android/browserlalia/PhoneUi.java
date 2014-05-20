@@ -205,6 +205,10 @@ public class PhoneUi extends BaseUi {
             }
             closeOthers.setEnabled(!isLastTab);
         }
+        MenuItem exit = menu.findItem(R.id.exit_menu_id);
+        if (!showingNavScreen()) {
+            exit.setVisible(false);
+        }
         if (showingNavScreen()) {
             menu.setGroupVisible(R.id.LIVE_MENU, false);
             menu.setGroupVisible(R.id.SNAPSHOT_MENU, false);
