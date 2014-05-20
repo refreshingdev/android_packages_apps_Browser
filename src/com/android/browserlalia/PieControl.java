@@ -207,7 +207,7 @@ public class PieControl implements PieMenu.PieController, OnClickListener {
                 web.reload();
             }
         } else if (mUrl.getView() == v) {
-            mUi.editUrl(false, true);
+            mUi.showTitleBarForDuration();
         } else if (mBookmarks.getView() == v) {
             mUiController.bookmarksOrHistoryPicker(UI.ComboViews.Bookmarks);
         } else if (mHistory.getView() == v) {
