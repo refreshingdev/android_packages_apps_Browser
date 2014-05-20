@@ -2444,7 +2444,6 @@ public class Controller
         if (mTabControl.getTabCount() == 1) {
             mCrashRecoveryHandler.clearState();
             mTabControl.removeTab(getCurrentTab());
-            mActivity.finish();
             return;
         }
         final Tab current = mTabControl.getCurrentTab();
