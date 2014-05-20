@@ -47,6 +47,7 @@ public class UrlBarAutoShowManager implements OnTouchListener,
     private long mLastScrollTime;
     private long mTriggeredTime;
     private boolean mIsScrolling;
+    private boolean mShowOnScrollDisabled;
 
     public UrlBarAutoShowManager(BaseUi ui) {
         mUi = ui;
@@ -97,6 +98,8 @@ public class UrlBarAutoShowManager implements OnTouchListener,
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (mShowOnScrollDisabled) return false;
+
         if (event.getPointerCount() > 1) {
             stopTracking();
         }
@@ -141,4 +144,7 @@ public class UrlBarAutoShowManager implements OnTouchListener,
         return false;
     }
 
+    public void disableShowOnScroll(boolean disable) {
+        mShowOnScrollDisabled = disable;
+    }
 }
