@@ -53,7 +53,6 @@ public class TitleBar extends RelativeLayout {
 
     private AutologinBar mAutoLogin;
     private NavigationBarBase mNavBar;
-    private boolean mUseQuickControls;
 
     //state
     private boolean mShowing;
@@ -110,8 +109,7 @@ public class TitleBar extends RelativeLayout {
     }
 
     private void setFixedTitleBar() {
-        boolean isFixed = !mUseQuickControls
-                && !mContext.getResources().getBoolean(R.bool.hide_title);
+        boolean isFixed = !mContext.getResources().getBoolean(R.bool.hide_title);
         isFixed |= mAccessibilityManager.isEnabled();
         // If getParent() returns null, we are initializing
         ViewGroup parent = (ViewGroup)getParent();
@@ -139,16 +137,6 @@ public class TitleBar extends RelativeLayout {
         return mUiController;
     }
 
-    public void setUseQuickControls(boolean use) {
-        mUseQuickControls = use;
-        setFixedTitleBar();
-        if (use) {
-            this.setVisibility(View.GONE);
-        } else {
-            this.setVisibility(View.VISIBLE);
-        }
-    }
-
     void setShowProgressOnly(boolean progress) {
         if (progress && !wantsToBeVisible()) {
             mNavBar.setVisibility(View.GONE);
@@ -171,7 +159,7 @@ public class TitleBar extends RelativeLayout {
 
     void show() {
         cancelTitleBarAnimation(false);
-        if (mUseQuickControls || mSkipTitleBarAnimations) {
+        if (mSkipTitleBarAnimations) {
             this.setVisibility(View.VISIBLE);
             this.setTranslationY(0);
         } else {
@@ -190,22 +178,18 @@ public class TitleBar extends RelativeLayout {
     }
 
     void hide() {
-        if (mUseQuickControls) {
-            this.setVisibility(View.GONE);
+        if (mIsFixedTitleBar) return;
+        if (!mSkipTitleBarAnimations) {
+            cancelTitleBarAnimation(false);
+            int visibleHeight = getVisibleTitleHeight();
+            mTitleBarAnimator = ObjectAnimator.ofFloat(this,
+                    "translationY", getTranslationY(),
+                    (-getEmbeddedHeight() + visibleHeight));
+            mTitleBarAnimator.addListener(mHideTileBarAnimatorListener);
+            setupTitleBarAnimator(mTitleBarAnimator);
+            mTitleBarAnimator.start();
         } else {
-            if (mIsFixedTitleBar) return;
-            if (!mSkipTitleBarAnimations) {
-                cancelTitleBarAnimation(false);
-                int visibleHeight = getVisibleTitleHeight();
-                mTitleBarAnimator = ObjectAnimator.ofFloat(this,
-                        "translationY", getTranslationY(),
-                        (-getEmbeddedHeight() + visibleHeight));
-                mTitleBarAnimator.addListener(mHideTileBarAnimatorListener);
-                setupTitleBarAnimator(mTitleBarAnimator);
-                mTitleBarAnimator.start();
-            } else {
-                onScrollChanged();
-            }
+            onScrollChanged();
         }
         mShowing = false;
     }
@@ -262,11 +246,6 @@ public class TitleBar extends RelativeLayout {
             mHideLoad=false;
             mNavBar.onProgressStopped();
             // check if needs to be hidden
-            if (!isEditingUrl() && !wantsToBeVisible()) {
-                if (mUseQuickControls) {
-                    hide();
-                }
-            }
         } else {
             if (!mInLoad) {
                 mProgress.setVisibility(View.VISIBLE);
@@ -275,21 +254,15 @@ public class TitleBar extends RelativeLayout {
             }
             mProgress.setProgress(newProgress * PageProgressView.MAX_PROGRESS
                     / PROGRESS_MAX);
-            if (!isHideLoad() && !mUseQuickControls) {
+            if (!isHideLoad()) {
                 hide();
                 mHideLoad=true;
-            }
-            if (mUseQuickControls && !isEditingUrl()) {
-                setShowProgressOnly(true);
-                if (!mShowing) {
-                    show();
-                }
             }
         }
     }
 
     public int getEmbeddedHeight() {
-        if (mUseQuickControls || mIsFixedTitleBar) return 0;
+        if (mIsFixedTitleBar) return 0;
         return calculateEmbeddedHeight();
     }
 
@@ -312,9 +285,6 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void showAutoLogin(boolean animate) {
-        if (mUseQuickControls) {
-            mBaseUi.showTitleBar();
-        }
         if (mAutoLogin == null) {
             inflateAutoLoginBar();
         }
@@ -326,34 +296,28 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void hideAutoLogin(boolean animate) {
-        if (mUseQuickControls) {
-            mBaseUi.hideTitleBar();
+        if (animate) {
+            Animation anim = AnimationUtils.loadAnimation(getContext(),
+                    R.anim.autologin_exit);
+            anim.setAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationEnd(Animation a) {
+                    mAutoLogin.setVisibility(View.GONE);
+                    mBaseUi.refreshWebView();
+                }
+
+                @Override
+                public void onAnimationStart(Animation a) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation a) {
+                }
+            });
+            mAutoLogin.startAnimation(anim);
+        } else if (mAutoLogin.getAnimation() == null) {
             mAutoLogin.setVisibility(View.GONE);
             mBaseUi.refreshWebView();
-        } else {
-            if (animate) {
-                Animation anim = AnimationUtils.loadAnimation(getContext(),
-                        R.anim.autologin_exit);
-                anim.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationEnd(Animation a) {
-                        mAutoLogin.setVisibility(View.GONE);
-                        mBaseUi.refreshWebView();
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation a) {
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation a) {
-                    }
-                });
-                mAutoLogin.startAnimation(anim);
-            } else if (mAutoLogin.getAnimation() == null) {
-                mAutoLogin.setVisibility(View.GONE);
-                mBaseUi.refreshWebView();
-            }
         }
     }
 
@@ -384,10 +348,6 @@ public class TitleBar extends RelativeLayout {
 
     public NavigationBarBase getNavigationBar() {
         return mNavBar;
-    }
-
-    public boolean useQuickControls() {
-        return mUseQuickControls;
     }
 
     public boolean isHideLoad() {

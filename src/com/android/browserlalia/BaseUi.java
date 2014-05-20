@@ -204,7 +204,6 @@ public abstract class BaseUi implements UI {
     @Override
     public void setUseQuickControls(boolean useQuickControls) {
         mUseQuickControls = useQuickControls;
-        mTitleBar.setUseQuickControls(mUseQuickControls);
         if (useQuickControls) {
             mPieControl = new PieControl(mActivity, mUiController, this);
             mPieControl.attachToContainer(mContentView);
@@ -284,12 +283,9 @@ public abstract class BaseUi implements UI {
             // Request focus on the top window.
             if (mUseQuickControls) {
                 mPieControl.forceToTop(mContentView);
-                web.setTitleBar(null);
-                mTitleBar.hide();
-            } else {
-                web.setTitleBar(mTitleBar);
-                mTitleBar.onScrollChanged();
             }
+            web.setTitleBar(mTitleBar);
+            mTitleBar.onScrollChanged();
         }
         mTitleBar.bringToFront();
         tab.getTopWindow().requestFocus();
@@ -303,10 +299,9 @@ public abstract class BaseUi implements UI {
 
     protected void updateUrlBarAutoShowManagerTarget() {
         WebView web = mActiveTab != null ? mActiveTab.getWebView() : null;
-        if (!mUseQuickControls && web instanceof BrowserWebView) {
+        if (web instanceof BrowserWebView) {
             mUrlBarAutoShowManager.setTarget((BrowserWebView) web);
-        } else {
-            mUrlBarAutoShowManager.setTarget(null);
+            mUrlBarAutoShowManager.disableShowOnScroll(mUseQuickControls);
         }
     }
 

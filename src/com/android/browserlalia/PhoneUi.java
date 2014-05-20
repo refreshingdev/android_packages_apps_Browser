@@ -80,9 +80,6 @@ public class PhoneUi extends BaseUi {
 
     @Override
     public void editUrl(boolean clearInput, boolean forceIME) {
-        if (mUseQuickControls) {
-            mTitleBar.setShowProgressOnly(false);
-        }
         //Do nothing while at Nav show screen.
         if (mShowNav) return;
         super.editUrl(clearInput, forceIME);
@@ -152,11 +149,8 @@ public class PhoneUi extends BaseUi {
         // Request focus on the top window.
         if (mUseQuickControls) {
             mPieControl.forceToTop(mContentView);
-            view.setTitleBar(null);
-            mTitleBar.setShowProgressOnly(true);
-        } else {
-            view.setTitleBar(mTitleBar);
         }
+        view.setTitleBar(mTitleBar);
         // update nav bar state
         mNavigationBar.onStateChanged(StateListener.STATE_NORMAL);
         updateLockIconToLatest(tab);
