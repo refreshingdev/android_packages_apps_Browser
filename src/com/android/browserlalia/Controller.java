@@ -1742,6 +1742,8 @@ public class Controller
                 }
                 break;
 
+            case R.id.exit_menu_id:
+                System.exit(0);
             default:
                 return false;
         }

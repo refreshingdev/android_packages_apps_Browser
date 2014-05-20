@@ -150,5 +150,9 @@
         android:title="@string/reload"
         android:icon="@*android:drawable/ic_menu_refresh"
         android:visible="false" />
+    <item android:id="@+id/exit_menu_id"
+        android:title="@string/exit"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        />
 </menu>
  
