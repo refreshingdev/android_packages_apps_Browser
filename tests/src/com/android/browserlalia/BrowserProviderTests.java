@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.android.browser;
+package com.android.browserlalia;
 
 import com.android.browserlalia.provider.BrowserProvider;
 import com.android.browserlalia.provider.BrowserProvider2;
-import com.android.browser.tests.utils.ProviderTestCase3;
+import com.android.browserlalia.tests.utils.ProviderTestCase3;
 
 import android.app.SearchManager;
 import android.content.ContentValues;

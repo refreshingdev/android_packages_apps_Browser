@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.browser.tests.utils;
+package com.android.browserlalia.tests.utils;
 
 import android.database.ContentObserver;
 import android.net.Uri;

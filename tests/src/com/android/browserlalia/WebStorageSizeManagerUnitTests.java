@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.browser;
+package com.android.browserlalia;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.MediumTest;

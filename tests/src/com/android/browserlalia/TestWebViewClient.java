@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.browser;
+package com.android.browserlalia;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;

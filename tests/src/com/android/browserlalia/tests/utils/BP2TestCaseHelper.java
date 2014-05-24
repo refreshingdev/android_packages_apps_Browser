@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.browser.tests.utils;
+package com.android.browserlalia.tests.utils;
 
 import com.android.browserlalia.provider.BrowserProvider2;
 
@@ -222,7 +222,7 @@ public abstract class BP2TestCaseHelper extends ProviderTestCase3<BrowserProvide
 
             @Override
             public boolean accept(File dir, String filename) {
-                return filename.startsWith(ProviderTestCase3.FILENAME_PREFIX);
+                return filename.startsWith(FILENAME_PREFIX);
             }
         });
         for (File testFile : testFiles) {

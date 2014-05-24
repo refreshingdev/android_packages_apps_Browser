@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.browser.tests;
+package com.android.browserlalia.tests;
 
 import com.android.browserlalia.Bookmarks;
-import com.android.browser.tests.utils.BP2TestCaseHelper;
+import com.android.browserlalia.tests.utils.BP2TestCaseHelper;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
