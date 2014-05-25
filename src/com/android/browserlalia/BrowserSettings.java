@@ -88,6 +88,10 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
             "Android 4.1.2; en-us; GT-I9100 Build/JZO54K) AppleWebKit/534.30 " +
             "(KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
+    private static final String DEFAULT_NEXUS = "Mozilla/5.0 (Linux; " +
+            "Android 4.4; Nexus 4 Build/KRT16H) AppleWebKit/537.36\n" +
+            "(KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36";
+
     private static final String USER_AGENTS[] = { null,
             DESKTOP_USERAGENT,
             IPHONE_USERAGENT,
@@ -200,10 +204,6 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
                     new WebStorageSizeManager.WebKitAppCacheInfo(getAppCachePath()));
             // Workaround b/5254577
             mPrefs.registerOnSharedPreferenceChangeListener(BrowserSettings.this);
-            if (Build.VERSION.CODENAME.equals("REL")) {
-                // This is a release build, always startup with debug disabled
-                setDebugEnabled(false);
-            }
             if (mPrefs.contains(PREF_TEXT_SIZE)) {
                 /*
                  * Update from TextSize enum to zoom percent

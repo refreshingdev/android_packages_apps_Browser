@@ -85,6 +85,12 @@
                 android:summary="@string/pref_content_autofit_summary" />
 
         <CheckBoxPreference
+                android:key="debug_menu"
+                android:defaultValue="false"
+                android:title="@string/debug_mode"
+                android:summary="@string/debug_mode_summary" />
+
+        <CheckBoxPreference
                 android:key="block_popup_windows"
                 android:defaultValue="true"
                 android:title="@string/pref_content_block_popups" />
