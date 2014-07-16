@@ -15,7 +15,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="contextmenu_openlink_incognito_newwindow">Apri in una nuova scheda in incognito</string>
   <string name="contextmenu_openlink_incognito_newwindow_background">Apri in una nuova scheda in secondo piano in incognito</string>
   <string name="pref_content_ua">User agent</string>
@@ -23,4 +23,13 @@
   <string name="pref_lab_websockets">WebSocket</string>
   <string name="pref_lab_websockets_summary">Attiva WebSocket</string>
   <string name="accessibility_button_homescreen">Pagina iniziale</string>
+  <string name="pref_security_site_whitelist_cookies">Riduzione tracciamento. Elimina i cookie frequentemente</string>
+  <string name="pref_security_site_whitelist_cookies_never">Non cancellare mai</string>
+  <string name="pref_security_site_whitelist_cookies_only">Elimina da tutti i siti che non sono nella mia whitelist</string>
+  <string name="pref_security_site_whitelist_cookies_and_data">Elimina anche tutti i database localstorage</string>
+  <string name="pref_security_site_whitelist_cookies_verbose">Conteggio cookie</string>
+  <string name="pref_security_site_whitelist_cookies_verbose_summary">Visualizza il numero di cookie eliminati e rimanenti</string>
+  <string name="site_cookies_whitelisted">Mantieni i cookie del sito</string>
+  <string name="cookies_deleted_info">cookie eliminati</string>
+  <string name="cookies_remain_info">cookie rimanenti</string>
 </resources>

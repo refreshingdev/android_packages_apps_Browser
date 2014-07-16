@@ -15,7 +15,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="contextmenu_openlink_incognito_newwindow">Открыть в новой вкладке (инкогнито)</string>
   <string name="contextmenu_openlink_incognito_newwindow_background">Открыть в фоновой вкладке (инкогнито)</string>
   <string name="pref_content_ua">User Agent</string>
@@ -23,4 +23,13 @@
   <string name="pref_lab_websockets"> Веб-сокеты</string>
   <string name="pref_lab_websockets_summary">Включить поддержку протокола WebSocket</string>
   <string name="accessibility_button_homescreen">Домашний экран</string>
+  <string name="pref_security_site_whitelist_cookies">Автоудаление файлов cookie</string>
+  <string name="pref_security_site_whitelist_cookies_never">Никогда не удалять</string>
+  <string name="pref_security_site_whitelist_cookies_only">Удалять cookie сайтов не из белого списка</string>
+  <string name="pref_security_site_whitelist_cookies_and_data">Также удалять все базы данных localstorage</string>
+  <string name="pref_security_site_whitelist_cookies_verbose">Счётчик файлов cookie</string>
+  <string name="pref_security_site_whitelist_cookies_verbose_summary">Показывать число удалённых и оставшихся файлов cookie</string>
+  <string name="site_cookies_whitelisted">Сохранить файлы cookie этого сайта</string>
+  <string name="cookies_deleted_info">cookie удалено</string>
+  <string name="cookies_remain_info">cookie сохранено</string>
 </resources>
