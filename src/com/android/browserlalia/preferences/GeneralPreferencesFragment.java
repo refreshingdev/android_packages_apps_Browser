@@ -87,20 +87,16 @@ public class GeneralPreferencesFragment extends PreferenceFragment
 
         if (pref.getKey().equals(PREF_HOMEPAGE_PICKER)) {
             BrowserSettings settings = BrowserSettings.getInstance();
-            if (CURRENT.equals(objValue)) {
+            if (CURRENT.equals(objValue) && mCurrentPage != null) {
                 settings.setHomePage(mCurrentPage);
-            }
-            if (BLANK.equals(objValue)) {
+            } else if (BLANK.equals(objValue) || mCurrentPage == null) {
                 settings.setHomePage(BLANK_URL);
-            }
-            if (DEFAULT.equals(objValue)) {
+            } else if (DEFAULT.equals(objValue)) {
                 settings.setHomePage(BrowserSettings.getFactoryResetHomeUrl(
                         getActivity()));
-            }
-            if (MOST_VISITED.equals(objValue)) {
+            } else if (MOST_VISITED.equals(objValue)) {
                 settings.setHomePage(HomeProvider.MOST_VISITED);
-            }
-            if (OTHER.equals(objValue)) {
+            } else if (OTHER.equals(objValue)) {
                 promptForHomepage((ListPreference) pref);
                 return false;
             }

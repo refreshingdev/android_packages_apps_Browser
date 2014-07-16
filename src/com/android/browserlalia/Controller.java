@@ -685,6 +685,9 @@ public class Controller
         releaseWakeLock();
 
         mUi.onResume();
+        if (getCurrentTab() == null) {
+            ((PhoneUi) mUi).showNavScreen();
+        }
         mNetworkHandler.onResume();
         WebView.enablePlatformNotifications();
         NfcHandler.register(mActivity, this);
@@ -1552,7 +1555,7 @@ public class Controller
         fullscreen.setChecked(mUi.isFullscreen());
 
         menu.setGroupVisible(R.id.LIVE_MENU, isLive);
-        menu.setGroupVisible(R.id.SNAPSHOT_MENU, !isLive);
+        menu.setGroupVisible(R.id.SNAPSHOT_MENU, !isLive && tab != null);
         menu.setGroupVisible(R.id.COMBO_MENU, false);
 
         mUi.updateMenuState(tab, menu);
@@ -1560,9 +1563,6 @@ public class Controller
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (null == getCurrentTopWebView()) {
-            return false;
-        }
         if (mMenuIsDown) {
             // The shortcut action consumes the MENU. Even if it is still down,
             // it won't trigger the next shortcut action. In the case of the
@@ -1739,8 +1739,11 @@ public class Controller
     @Override
     public void openPreferences() {
         Intent intent = new Intent(mActivity, BrowserPreferencesPage.class);
-        intent.putExtra(BrowserPreferencesPage.CURRENT_PAGE,
-                getCurrentTopWebView().getUrl());
+        WebView currentTopWebView = getCurrentTopWebView();
+        if (currentTopWebView != null) {
+            intent.putExtra(BrowserPreferencesPage.CURRENT_PAGE,
+                    currentTopWebView.getUrl());
+        }
         mActivity.startActivityForResult(intent, PREFERENCES_PAGE);
     }
 
