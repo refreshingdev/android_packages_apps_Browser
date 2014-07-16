@@ -1056,6 +1056,12 @@ class Tab implements PictureListener {
             }
             mWebViewController.dismissSubWindow(Tab.this);
         }
+
+        @Override
+        public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+            mErrorConsole.addErrorMessage(consoleMessage);
+            return true;
+        }
     }
 
     // -------------------------------------------------------------------------
