@@ -1021,7 +1021,6 @@
     <string name="filter_history">Filter history</string>
     <string name="exit">Exit</string>
     <string name="debug_mode">Debug mode</string>
-    <string name="debug_mode_summary">dd</string>
     <string name="not_used">Not used</string>
 
 </resources>

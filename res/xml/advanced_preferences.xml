@@ -87,8 +87,7 @@
         <CheckBoxPreference
                 android:key="debug_menu"
                 android:defaultValue="false"
-                android:title="@string/debug_mode"
-                android:summary="@string/debug_mode_summary" />
+                android:title="@string/debug_mode"/>
 
         <CheckBoxPreference
                 android:key="block_popup_windows"
