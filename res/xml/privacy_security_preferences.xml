@@ -44,7 +44,6 @@
                 android:title="@string/pref_security_accept_cookies"
                 android:summary="@string/pref_security_accept_cookies_summary" />
 
-        <com.android.browserlalia.BrowserYesNoPreference
         <ListPreference
                 android:key="site_whitelist_cookies"
                 android:dependency="accept_cookies"
@@ -61,7 +60,7 @@
                 android:title="@string/pref_security_site_whitelist_cookies_verbose"
                 android:summary="@string/pref_security_site_whitelist_cookies_verbose_summary" />
 
-        <com.android.browser.BrowserYesNoPreference
+        <com.android.browserlalia.BrowserYesNoPreference
                 android:key="privacy_clear_cookies"
                 android:title="@string/pref_privacy_clear_cookies"
                 android:summary="@string/pref_privacy_clear_cookies_summary"

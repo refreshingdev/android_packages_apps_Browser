@@ -65,18 +65,9 @@ import android.webkit.WebView.PictureListener;
 import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import com.android.browserlalia.homepages.HomeProvider;
 
-import com.android.browser.TabControl.OnThumbnailUpdatedListener;
-import com.android.browser.homepages.HomeProvider;
-import com.android.browser.preferences.GeneralPreferencesFragment;
-import com.android.browser.provider.SnapshotProvider.Snapshots;
-import com.google.common.io.ByteStreams;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.Map;
@@ -195,7 +186,7 @@ class Tab implements PictureListener {
     private boolean mUpdateThumbnail;
 
     /**
-     * See {@link #clearBackStackWhenItemAdded(String)}.
+     * See {@link #clearBackStackWhenItemAdded(Pattern)}.
      */
     private Pattern mClearHistoryUrlPattern;
 
