@@ -206,8 +206,6 @@ public class Controller
     private boolean mBlockEvents;
 
     private String mVoiceResult;
-    private boolean mShouldDisplayTabsMenu;
-    private boolean mMenuContainsTabs;
 
     public Controller(Activity browser) {
         mActivity = browser;
@@ -1473,53 +1471,32 @@ public class Controller
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mShouldDisplayTabsMenu) {
-            menu.clear();
-
-            List<Tab> tabs = mTabControl.getTabs();
-            int currentPosition = mTabControl.getCurrentPosition();
-            for (int i = 0; i < tabs.size(); i++) {
-                Tab tab = tabs.get(i);
-                String title = tab.getTitle();
-                if (i == currentPosition) title = "* " + title; // set checked doesn't work
-                menu.add(0, i, i, title);
-            }
-            mMenuContainsTabs = true;
-            return true;
-        } else {
-            if (mMenuContainsTabs) {
-                menu.clear();
-                onCreateOptionsMenu(menu);
-                mMenuContainsTabs = false;
-            }
-
-            updateInLoadMenuItems(menu, getCurrentTab());
-            // hold on to the menu reference here; it is used by the page callbacks
-            // to update the menu based on loading state
-            mCachedMenu = menu;
-            // Note: setVisible will decide whether an item is visible; while
-            // setEnabled() will decide whether an item is enabled, which also means
-            // whether the matching shortcut key will function.
-            switch (mMenuState) {
-                case EMPTY_MENU:
-                    if (mCurrentMenuState != mMenuState) {
-                        menu.setGroupVisible(R.id.MAIN_MENU, false);
-                        menu.setGroupEnabled(R.id.MAIN_MENU, false);
-                        menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, false);
-                    }
-                    break;
-                default:
-                    if (mCurrentMenuState != mMenuState) {
-                        menu.setGroupVisible(R.id.MAIN_MENU, true);
-                        menu.setGroupEnabled(R.id.MAIN_MENU, true);
-                        menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, true);
-                    }
-                    updateMenuState(getCurrentTab(), menu);
-                    break;
-            }
-            mCurrentMenuState = mMenuState;
-            return mUi.onPrepareOptionsMenu(menu);
+        updateInLoadMenuItems(menu, getCurrentTab());
+        // hold on to the menu reference here; it is used by the page callbacks
+        // to update the menu based on loading state
+        mCachedMenu = menu;
+        // Note: setVisible will decide whether an item is visible; while
+        // setEnabled() will decide whether an item is enabled, which also means
+        // whether the matching shortcut key will function.
+        switch (mMenuState) {
+            case EMPTY_MENU:
+                if (mCurrentMenuState != mMenuState) {
+                    menu.setGroupVisible(R.id.MAIN_MENU, false);
+                    menu.setGroupEnabled(R.id.MAIN_MENU, false);
+                    menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, false);
+                }
+                break;
+            default:
+                if (mCurrentMenuState != mMenuState) {
+                    menu.setGroupVisible(R.id.MAIN_MENU, true);
+                    menu.setGroupEnabled(R.id.MAIN_MENU, true);
+                    menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, true);
+                }
+                updateMenuState(getCurrentTab(), menu);
+                break;
         }
+        mCurrentMenuState = mMenuState;
+        return mUi.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -1583,14 +1560,6 @@ public class Controller
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mShouldDisplayTabsMenu) {
-            Tab tabToActivate = mTabControl.getTab(item.getItemId());
-            Log.d(getClass().getSimpleName(),
-                    "activating tab " + tabToActivate.getTitle() + " id " + item.getItemId());
-            setActiveTab(tabToActivate);
-            return true;
-        }
-
         if (null == getCurrentTopWebView()) {
             return false;
         }
@@ -1838,19 +1807,11 @@ public class Controller
      * programmatically open the options menu
      */
     public void openOptionsMenu() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                // TODO any solution to prevent menu flicker?
-                mActivity.openOptionsMenu();
-            }
-        });
+        mActivity.openOptionsMenu();
     }
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
-        Log.d(getClass().getSimpleName(),
-                "onMenuOpened, mShouldDisplayTabsMenu = " + mShouldDisplayTabsMenu);
         if (mOptionsMenuOpen) {
             if (mConfigChanged) {
                 // We do not need to make any changes to the state of the
@@ -1881,7 +1842,6 @@ public class Controller
     @Override
     public void onOptionsMenuClosed(Menu menu) {
         mOptionsMenuOpen = false;
-        mShouldDisplayTabsMenu = false;
         mUi.onOptionsMenuClosed(isInLoad());
     }
 
@@ -2673,14 +2633,6 @@ public class Controller
                 if (!noModifiers) break;
                 event.startTracking();
                 return true;
-            case KeyEvent.KEYCODE_MENU:
-                if (!noModifiers) break;
-                if (event.getRepeatCount() == 1) {
-                    mShouldDisplayTabsMenu = true;
-                    openOptionsMenu();
-                }
-                // consumed, we are showing menu programatically
-                return true;
             case KeyEvent.KEYCODE_FORWARD:
                 if (!noModifiers) break;
                 tab.goForward();
@@ -2754,9 +2706,6 @@ public class Controller
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (isMenuOrCtrlKey(keyCode)) {
             mMenuIsDown = false;
-            if (!mShouldDisplayTabsMenu) {
-                openOptionsMenu();
-            }
             if (KeyEvent.KEYCODE_MENU == keyCode
                     && event.isTracking() && !event.isCanceled()) {
                 return onMenuKey();
