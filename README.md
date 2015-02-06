@@ -15,14 +15,13 @@
     removed adding RLZ param to google search URLs
      (doesn't work anyway on CM11 without "Play Services")
     added search icon to navbar to enable search suggestions, search suggestions disabled by default
-    changed hardcoded "quick-search" provider do duckduckgo
+    changed hardcoded "quick-search" provider to duckduckgo
     changed configurable user agents
     
     Renamed package, name and made appicon red, now able to use alongside system browser
     uses system browser providers for bookmarks and history (and more?)
      (TODO use internal, cloned providers?)
     removed "more" button from navbar, since there is a menu button on i9100
-    
     
     Is it good for privacy now?
     No. Besides missing features:
